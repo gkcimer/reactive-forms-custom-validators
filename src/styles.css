@@ -1,3 +1,7 @@
 
 /* Add application styles & imports to this file! */
 @import '~bootstrap/dist/css/bootstrap.min.css';
+
+body{
+  background-image: url('https://github.com/gkcimer/reactive-forms-custom-validators/blob/master/so-white.png?raw=true');
+}

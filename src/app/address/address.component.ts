@@ -7,12 +7,12 @@ import {
 } from '@angular/forms';
 
 function ZipCodeValidator(control: FormControl): ValidationErrors | null {
+	
+	
   return null;
 }
 
-function CountryAddressTypeValidator(
-  group: FormGroup
-): ValidationErrors | null {
+function CountryAddressTypeValidator(group: FormGroup): ValidationErrors | null {
   const countryCtrl = group.get('country');
   const isForeignAddressCtrl = group.get('isForeignAddress');
 
@@ -549,7 +549,7 @@ export class AddressComponent implements OnInit {
 
   ngOnInit() {}
 
-
+	get address() { return <FormGroup>this.adderessForm; }
 	get addressLine1() { return <FormControl>this.adderessForm.get('addressLine1');}
 	get addressLine2() { return <FormControl>this.adderessForm.get('addressLine2');}
 	get city() { return <FormControl>this.adderessForm.get('city');}

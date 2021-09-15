@@ -4,7 +4,7 @@
   <div class="row">
     {{ adderessForm.value | json}}<br>
     {{ adderessForm.valid}} <br>
-    {{ addressLine1.errors | json}}
+    {{ zipCode.errors | json}}
   </div>
 
   <form class="row g-3" [formGroup]="adderessForm">
@@ -26,9 +26,14 @@
     </div>
 
 
-    <div class="col-md-6">
+    <div class="col-md-4">
       <label for="city" class="form-label">City</label>
       <input type="text" class="form-control form-control-sm" id="city" formControlName='city'>
+
+      <ng-container *ngIf="(city.touched || city.dirty ) && city.errors">
+        <div class="text-danger"*ngIf="city.errors.required"> City is required</div>
+      </ng-container>
+
     </div>
 
 
@@ -40,23 +45,42 @@
         </ng-container >
       </select>
 
+      <ng-container *ngIf="(state.touched || state.dirty ) && state.errors">
+        <div class="text-danger"*ngIf="state.errors.required"> State is required</div>
+      </ng-container>
+
       <input type="text" class="form-control form-control-sm" id="city" formControlName='state' *ngIf="isForeignAddress.value">
 
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-4">
       <label for="zipCode" class="form-label">Zip</label>
       <input type="text" class="form-control form-control-sm" id="zipCode"  formControlName='zipCode'>
+
+      <div class="fw-light text-secondary" *ngIf="!((zipCode.touched || zipCode.dirty ) && zipCode.errors)"> Please enter 5 or 9 digit zip code. No space/dashes required</div>
+
+      <ng-container *ngIf="(zipCode.touched || zipCode.dirty ) && zipCode.errors">
+        <div class="text-danger"*ngIf="zipCode.errors.required"> Zip Code is required</div>
+        <div class="text-danger"*ngIf="zipCode.errors.pattern"> Zip Code should be numeric 5 or 9 digit</div>
+    </ng-container>
+
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
       <label for="country" class="form-label">Country</label>
       <select id="country" class="form-select form-select-sm" formControlName='country'>
         <ng-container *ngFor="let country of countries" >
           <option [value]="country.code">{{country.name}}</option>
-        </ng-container >
-   </select>
+        </ng-container>
+      </select>
+
+      <ng-container *ngIf="address.errors">
+        <div class="text-danger"*ngIf="address.errors.countryAddressTypeMismatch"> 'United States of America' is invalid country for Foreign Address</div>
+        <div class="text-danger"*ngIf="address.errors.addressTypeCountryMismatch"> 'United States of America' is only valid country for non-foreign Address</div>
+      </ng-container>
+
     </div>
+
     <div class="col-12">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" id="addressType" formControlName='isForeignAddress'>
@@ -65,7 +89,7 @@
     </div>
 
     <div class="col-12">
-      <button type="submit" class="btn btn-primary">Sign in</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 
   </form>
