@@ -1,0 +1,73 @@
+<div class="container">
+  <h4>Address</h4>
+
+  <div class="row">
+    {{ adderessForm.value | json}}<br>
+    {{ adderessForm.valid}} <br>
+    {{ addressLine1.errors | json}}
+  </div>
+
+  <form class="row g-3" [formGroup]="adderessForm">
+
+    <div class="col-md-8">
+      <label for="addressLine1" class="form-label">Address Line 1</label>
+      <input type="text" class="form-control form-control-sm" id="addressLine1" formControlName='addressLine1'>
+      <div class="text-success" *ngIf="!addressLine1.errors"> Looks good!</div>
+
+      <ng-container *ngIf="(addressLine1.touched || addressLine1.dirty ) && addressLine1.errors">
+        <div class="text-danger"*ngIf="addressLine1.errors.required"> Address Line 1 is required</div>
+      </ng-container>
+
+    </div>
+
+    <div class="col-md-4">
+      <label for="addressLine2" class="form-label">Address Line 2</label>
+      <input type="text" class="form-control form-control-sm" id="addressLine2">
+    </div>
+
+
+    <div class="col-md-6">
+      <label for="city" class="form-label">City</label>
+      <input type="text" class="form-control form-control-sm" id="city" formControlName='city'>
+    </div>
+
+
+    <div class="col-md-4">
+      <label for="state" class="form-label">State</label>
+      <select id="state" class="form-select form-select-sm" formControlName='state' *ngIf="!isForeignAddress.value">
+        <ng-container *ngFor="let state of states" >
+          <option [value]="state.code">{{state.name}}</option>
+        </ng-container >
+      </select>
+
+      <input type="text" class="form-control form-control-sm" id="city" formControlName='state' *ngIf="isForeignAddress.value">
+
+    </div>
+
+    <div class="col-md-2">
+      <label for="zipCode" class="form-label">Zip</label>
+      <input type="text" class="form-control form-control-sm" id="zipCode"  formControlName='zipCode'>
+    </div>
+
+    <div class="col-md-4">
+      <label for="country" class="form-label">Country</label>
+      <select id="country" class="form-select form-select-sm" formControlName='country'>
+        <ng-container *ngFor="let country of countries" >
+          <option [value]="country.code">{{country.name}}</option>
+        </ng-container >
+   </select>
+    </div>
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="addressType" formControlName='isForeignAddress'>
+        <label class="form-check-label" for="addressType">Foreign Address</label>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+
+  </form>
+
+</div>
